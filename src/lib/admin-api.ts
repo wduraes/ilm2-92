@@ -1,4 +1,12 @@
 import { supabase } from '@/integrations/supabase/client';
+import type { 
+  UsuarioEntity, 
+  MunicipioEntity, 
+  EscolaEntity, 
+  TurmaEntity, 
+  AvaliacaoEntity, 
+  AlunoEntity 
+} from './admin-types';
 
 // Base admin API functions with role validation
 async function validateAdminRole() {
@@ -140,6 +148,31 @@ export async function fetchById<T>(table: string, id: string, select = '*'): Pro
   }
   
   return data as T;
+}
+
+// Typed fetch functions for specific entities
+export async function fetchUsuarioById(id: string): Promise<UsuarioEntity> {
+  return await fetchById<UsuarioEntity>('usuario', id);
+}
+
+export async function fetchMunicipioById(id: string): Promise<MunicipioEntity> {
+  return await fetchById<MunicipioEntity>('municipio', id);
+}
+
+export async function fetchEscolaById(id: string): Promise<EscolaEntity> {
+  return await fetchById<EscolaEntity>('escola', id);
+}
+
+export async function fetchTurmaById(id: string): Promise<TurmaEntity> {
+  return await fetchById<TurmaEntity>('turma', id, '*, escola(municipio_id)');
+}
+
+export async function fetchAvaliacaoById(id: string): Promise<AvaliacaoEntity> {
+  return await fetchById<AvaliacaoEntity>('avaliacao', id);
+}
+
+export async function fetchAlunoById(id: string): Promise<AlunoEntity> {
+  return await fetchById<AlunoEntity>('aluno', id);
 }
 
 // Reference data fetchers (no pagination needed)

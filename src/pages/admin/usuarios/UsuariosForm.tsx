@@ -16,7 +16,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminLayout from '@/components/admin/AdminLayout';
-import { createRecord, updateRecord, fetchById, fetchMunicipios, fetchPerfis } from '@/lib/admin-api';
+import { createRecord, updateRecord, fetchUsuarioById, fetchMunicipios, fetchPerfis } from '@/lib/admin-api';
 
 const usuarioSchema = z.object({
   email: z.string().email('E-mail inválido'),
@@ -58,7 +58,7 @@ export default function UsuariosForm() {
       setPerfis(perfisData);
 
       if (isEditing && id) {
-        const usuario = await fetchById('usuario', id);
+        const usuario = await fetchUsuarioById(id);
         setValue('email', usuario.email);
         setValue('nome', usuario.nome);
         setValue('municipio_id', usuario.municipio_id || '');

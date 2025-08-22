@@ -17,7 +17,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/hooks/use-toast';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminLayout from '@/components/admin/AdminLayout';
-import { createRecord, updateRecord, fetchById, fetchMunicipios, fetchEscolasByMunicipio, fetchTurmasByEscola } from '@/lib/admin-api';
+import { createRecord, updateRecord, fetchAlunoById, fetchMunicipios, fetchEscolasByMunicipio, fetchTurmasByEscola } from '@/lib/admin-api';
 
 const alunoSchema = z.object({
   nome: z.string().min(1, 'Nome é obrigatório'),
@@ -62,7 +62,7 @@ export default function AlunosForm() {
       setMunicipios(municipiosData);
 
       if (isEditing && id) {
-        const aluno = await fetchById('aluno', id) as any;
+        const aluno = await fetchAlunoById(id);
         setValue('nome', aluno.nome);
         setValue('municipio_id', aluno.municipio_id);
         setValue('escola_id', aluno.escola_id || '');

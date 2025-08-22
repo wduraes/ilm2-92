@@ -16,7 +16,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminLayout from '@/components/admin/AdminLayout';
-import { createRecord, updateRecord, fetchById, fetchMunicipios, fetchTiposAvaliacao } from '@/lib/admin-api';
+import { createRecord, updateRecord, fetchAvaliacaoById, fetchMunicipios, fetchTiposAvaliacao } from '@/lib/admin-api';
 
 const avaliacaoSchema = z.object({
   municipio_id: z.string().min(1, 'Município é obrigatório'),
@@ -63,7 +63,7 @@ export default function AvaliacoesForm() {
       setTipos(tiposData);
 
       if (isEditing && id) {
-        const avaliacao = await fetchById('avaliacao', id) as any;
+        const avaliacao = await fetchAvaliacaoById(id);
         setValue('municipio_id', avaliacao.municipio_id);
         setValue('tipo_id', avaliacao.tipo_id);
         setValue('data_inicio', avaliacao.data_inicio);

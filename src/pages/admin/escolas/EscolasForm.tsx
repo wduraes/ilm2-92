@@ -16,7 +16,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminLayout from '@/components/admin/AdminLayout';
-import { createRecord, updateRecord, fetchById, fetchMunicipios, fetchUsuariosByMunicipioAndPerfil } from '@/lib/admin-api';
+import { createRecord, updateRecord, fetchEscolaById, fetchMunicipios, fetchUsuariosByMunicipioAndPerfil } from '@/lib/admin-api';
 
 const escolaSchema = z.object({
   nome: z.string().min(1, 'Nome é obrigatório'),
@@ -60,7 +60,7 @@ export default function EscolasForm() {
       setMunicipios(municipiosData);
 
       if (isEditing && id) {
-        const escola = await fetchById('escola', id) as any;
+        const escola = await fetchEscolaById(id);
         setValue('nome', escola.nome);
         setValue('municipio_id', escola.municipio_id);
         setValue('coord_inf_id', escola.coord_inf_id || '');

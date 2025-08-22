@@ -17,7 +17,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import AdminLayout from '@/components/admin/AdminLayout';
-import { createRecord, updateRecord, fetchById, fetchUFs } from '@/lib/admin-api';
+import { createRecord, updateRecord, fetchMunicipioById, fetchUFs } from '@/lib/admin-api';
 
 const municipioSchema = z.object({
   nome: z.string().min(1, 'Nome é obrigatório'),
@@ -55,7 +55,7 @@ export default function MunicipiosForm() {
       setUfs(ufsData);
 
       if (isEditing && id) {
-        const municipio = await fetchById('municipio', id);
+        const municipio = await fetchMunicipioById(id);
         setValue('nome', municipio.nome);
         setValue('uf_sigla', municipio.uf_sigla);
         setValue('ativo', municipio.ativo);

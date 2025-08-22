@@ -19,7 +19,7 @@ import AdminLayout from '@/components/admin/AdminLayout';
 import { 
   createRecord, 
   updateRecord, 
-  fetchById, 
+  fetchTurmaById, 
   fetchMunicipios, 
   fetchEscolasByMunicipio,
   fetchCiclos,
@@ -77,7 +77,7 @@ export default function TurmasForm() {
       setCiclos(ciclosData);
 
       if (isEditing && id) {
-        const turma = await fetchById('turma', id) as any;
+        const turma = await fetchTurmaById(id);
         setValue('nome', turma.nome);
         setValue('municipio_id', turma.escola.municipio_id);
         setValue('escola_id', turma.escola_id);
