@@ -17,7 +17,7 @@ const supabase = createClient(supabaseUrl, supabaseServiceKey, {
 });
 
 const JWT_SECRET = "your-super-secret-jwt-key-change-in-production";
-const DEV_MODE = false; // Set to false in production
+const DEV_MODE = true; // Set to false in production
 
 interface JWTPayload {
   sub: string;
