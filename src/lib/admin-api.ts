@@ -10,6 +10,13 @@ import type {
   AlunoEntity 
 } from './admin-types';
 
+// Helper function to get the appropriate Supabase client
+function getSupabaseClient() {
+  // In DEV_MODE, use the normal client (anon key) to avoid browser issues
+  // In production, use the server client (service role key)
+  return featureFlags.DEV_MODE ? supabase : supabaseServer;
+}
+
 // Base admin API functions with role validation
 async function validateAdminRole() {
   // In DEV_MODE, bypass all authentication checks
@@ -57,7 +64,7 @@ export async function fetchWithPagination<T>(
 ): Promise<{ data: T[]; count: number; totalPages: number }> {
   await validateAdminRole();
   
-  let query = (supabaseServer as any)
+  let query = (getSupabaseClient() as any)
     .from(table)
     .select(select, { count: 'exact' });
   
@@ -96,7 +103,7 @@ export async function fetchWithPagination<T>(
 export async function createRecord<T>(table: string, data: Partial<T>): Promise<T> {
   await validateAdminRole();
   
-  const { data: result, error } = await (supabaseServer as any)
+  const { data: result, error } = await (getSupabaseClient() as any)
     .from(table)
     .insert(data)
     .select()
@@ -116,7 +123,7 @@ export async function updateRecord<T>(
 ): Promise<T> {
   await validateAdminRole();
   
-  const { data: result, error } = await (supabaseServer as any)
+  const { data: result, error } = await (getSupabaseClient() as any)
     .from(table)
     .update(data)
     .eq('id', id)
@@ -133,7 +140,7 @@ export async function updateRecord<T>(
 export async function deleteRecord(table: string, id: string): Promise<void> {
   await validateAdminRole();
   
-  const { error } = await (supabaseServer as any)
+  const { error } = await (getSupabaseClient() as any)
     .from(table)
     .delete()
     .eq('id', id);
@@ -146,7 +153,7 @@ export async function deleteRecord(table: string, id: string): Promise<void> {
 export async function fetchById<T>(table: string, id: string, select = '*'): Promise<T> {
   await validateAdminRole();
   
-  const { data, error } = await (supabaseServer as any)
+  const { data, error } = await (getSupabaseClient() as any)
     .from(table)
     .select(select)
     .eq('id', id)
