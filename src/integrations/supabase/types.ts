@@ -14,13 +14,576 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      aluno: {
+        Row: {
+          created_at: string
+          escola_id: string | null
+          id: string
+          is_inclusao: boolean
+          municipio_id: string
+          nome: string
+          turma_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          escola_id?: string | null
+          id?: string
+          is_inclusao?: boolean
+          municipio_id: string
+          nome: string
+          turma_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          escola_id?: string | null
+          id?: string
+          is_inclusao?: boolean
+          municipio_id?: string
+          nome?: string
+          turma_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "aluno_escola_id_fkey"
+            columns: ["escola_id"]
+            isOneToOne: false
+            referencedRelation: "escola"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "aluno_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipio"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "aluno_turma_id_fkey"
+            columns: ["turma_id"]
+            isOneToOne: false
+            referencedRelation: "turma"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      auth_otp: {
+        Row: {
+          attempts: number
+          code_hash: string
+          created_at: string
+          expires_at: string
+          id: string
+          usuario_id: string
+        }
+        Insert: {
+          attempts?: number
+          code_hash: string
+          created_at?: string
+          expires_at: string
+          id?: string
+          usuario_id: string
+        }
+        Update: {
+          attempts?: number
+          code_hash?: string
+          created_at?: string
+          expires_at?: string
+          id?: string
+          usuario_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "auth_otp_usuario_id_fkey"
+            columns: ["usuario_id"]
+            isOneToOne: false
+            referencedRelation: "usuario"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      avaliacao: {
+        Row: {
+          created_at: string
+          data_inicio: string
+          data_termino: string
+          id: string
+          municipio_id: string
+          tipo_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          data_inicio: string
+          data_termino: string
+          id?: string
+          municipio_id: string
+          tipo_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          data_inicio?: string
+          data_termino?: string
+          id?: string
+          municipio_id?: string
+          tipo_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "avaliacao_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipio"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "avaliacao_tipo_id_fkey"
+            columns: ["tipo_id"]
+            isOneToOne: false
+            referencedRelation: "tipo_avaliacao"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      ciclo: {
+        Row: {
+          created_at: string
+          id: string
+          nome: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          nome: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          nome?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      escola: {
+        Row: {
+          coord_fund_id: string | null
+          coord_inf_id: string | null
+          created_at: string
+          id: string
+          municipio_id: string
+          nome: string
+          updated_at: string
+        }
+        Insert: {
+          coord_fund_id?: string | null
+          coord_inf_id?: string | null
+          created_at?: string
+          id?: string
+          municipio_id: string
+          nome: string
+          updated_at?: string
+        }
+        Update: {
+          coord_fund_id?: string | null
+          coord_inf_id?: string | null
+          created_at?: string
+          id?: string
+          municipio_id?: string
+          nome?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "escola_coord_fund_id_fkey"
+            columns: ["coord_fund_id"]
+            isOneToOne: false
+            referencedRelation: "usuario"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "escola_coord_inf_id_fkey"
+            columns: ["coord_inf_id"]
+            isOneToOne: false
+            referencedRelation: "usuario"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "escola_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipio"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      log_importacao_aluno: {
+        Row: {
+          criado_em: string
+          escola_id: string | null
+          id: string
+          municipio_id: string
+          total_ignorados: number
+          total_importados: number
+          turma_id: string
+          usuario_id: string
+        }
+        Insert: {
+          criado_em?: string
+          escola_id?: string | null
+          id?: string
+          municipio_id: string
+          total_ignorados: number
+          total_importados: number
+          turma_id: string
+          usuario_id: string
+        }
+        Update: {
+          criado_em?: string
+          escola_id?: string | null
+          id?: string
+          municipio_id?: string
+          total_ignorados?: number
+          total_importados?: number
+          turma_id?: string
+          usuario_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "log_importacao_aluno_escola_id_fkey"
+            columns: ["escola_id"]
+            isOneToOne: false
+            referencedRelation: "escola"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "log_importacao_aluno_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipio"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "log_importacao_aluno_turma_id_fkey"
+            columns: ["turma_id"]
+            isOneToOne: false
+            referencedRelation: "turma"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "log_importacao_aluno_usuario_id_fkey"
+            columns: ["usuario_id"]
+            isOneToOne: false
+            referencedRelation: "usuario"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      municipio: {
+        Row: {
+          ativo: boolean
+          created_at: string
+          id: string
+          nome: string
+          uf_sigla: string
+          updated_at: string
+        }
+        Insert: {
+          ativo?: boolean
+          created_at?: string
+          id?: string
+          nome: string
+          uf_sigla: string
+          updated_at?: string
+        }
+        Update: {
+          ativo?: boolean
+          created_at?: string
+          id?: string
+          nome?: string
+          uf_sigla?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "municipio_uf_sigla_fkey"
+            columns: ["uf_sigla"]
+            isOneToOne: false
+            referencedRelation: "uf"
+            referencedColumns: ["sigla"]
+          },
+        ]
+      }
+      perfil: {
+        Row: {
+          created_at: string
+          id: string
+          nome: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          nome: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          nome?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      resultado_avaliacao: {
+        Row: {
+          aluno_id: string
+          avaliacao_id: string
+          ciclo_id: string
+          created_at: string
+          ei2_comp_frases: number | null
+          ei2_nivel_escrita: number | null
+          ei2_nivel_leitura: number | null
+          f1_escreve_nome: boolean | null
+          f1_nivel_escrita: number | null
+          f1_nivel_leitura: number | null
+          f1_nomes_letras: number | null
+          f1_sons_letras: number | null
+          id: string
+          respondido_em: string | null
+          turma_id: string
+          updated_at: string
+        }
+        Insert: {
+          aluno_id: string
+          avaliacao_id: string
+          ciclo_id: string
+          created_at?: string
+          ei2_comp_frases?: number | null
+          ei2_nivel_escrita?: number | null
+          ei2_nivel_leitura?: number | null
+          f1_escreve_nome?: boolean | null
+          f1_nivel_escrita?: number | null
+          f1_nivel_leitura?: number | null
+          f1_nomes_letras?: number | null
+          f1_sons_letras?: number | null
+          id?: string
+          respondido_em?: string | null
+          turma_id: string
+          updated_at?: string
+        }
+        Update: {
+          aluno_id?: string
+          avaliacao_id?: string
+          ciclo_id?: string
+          created_at?: string
+          ei2_comp_frases?: number | null
+          ei2_nivel_escrita?: number | null
+          ei2_nivel_leitura?: number | null
+          f1_escreve_nome?: boolean | null
+          f1_nivel_escrita?: number | null
+          f1_nivel_leitura?: number | null
+          f1_nomes_letras?: number | null
+          f1_sons_letras?: number | null
+          id?: string
+          respondido_em?: string | null
+          turma_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resultado_avaliacao_aluno_id_fkey"
+            columns: ["aluno_id"]
+            isOneToOne: false
+            referencedRelation: "aluno"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resultado_avaliacao_avaliacao_id_fkey"
+            columns: ["avaliacao_id"]
+            isOneToOne: false
+            referencedRelation: "avaliacao"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resultado_avaliacao_ciclo_id_fkey"
+            columns: ["ciclo_id"]
+            isOneToOne: false
+            referencedRelation: "ciclo"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resultado_avaliacao_turma_id_fkey"
+            columns: ["turma_id"]
+            isOneToOne: false
+            referencedRelation: "turma"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tipo_avaliacao: {
+        Row: {
+          created_at: string
+          id: string
+          nome: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          nome: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          nome?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      turma: {
+        Row: {
+          auxiliar_id: string | null
+          ciclo_id: string
+          created_at: string
+          escola_id: string
+          id: string
+          nome: string
+          professora_id: string
+          updated_at: string
+        }
+        Insert: {
+          auxiliar_id?: string | null
+          ciclo_id: string
+          created_at?: string
+          escola_id: string
+          id?: string
+          nome: string
+          professora_id: string
+          updated_at?: string
+        }
+        Update: {
+          auxiliar_id?: string | null
+          ciclo_id?: string
+          created_at?: string
+          escola_id?: string
+          id?: string
+          nome?: string
+          professora_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "turma_auxiliar_id_fkey"
+            columns: ["auxiliar_id"]
+            isOneToOne: false
+            referencedRelation: "usuario"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "turma_ciclo_id_fkey"
+            columns: ["ciclo_id"]
+            isOneToOne: false
+            referencedRelation: "ciclo"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "turma_escola_id_fkey"
+            columns: ["escola_id"]
+            isOneToOne: false
+            referencedRelation: "escola"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "turma_professora_id_fkey"
+            columns: ["professora_id"]
+            isOneToOne: false
+            referencedRelation: "usuario"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      uf: {
+        Row: {
+          nome: string
+          sigla: string
+        }
+        Insert: {
+          nome: string
+          sigla: string
+        }
+        Update: {
+          nome?: string
+          sigla?: string
+        }
+        Relationships: []
+      }
+      usuario: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          municipio_id: string | null
+          nome: string
+          perfil_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          municipio_id?: string | null
+          nome: string
+          perfil_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          municipio_id?: string | null
+          nome?: string
+          perfil_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "usuario_municipio_id_fkey"
+            columns: ["municipio_id"]
+            isOneToOne: false
+            referencedRelation: "municipio"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "usuario_perfil_id_fkey"
+            columns: ["perfil_id"]
+            isOneToOne: false
+            referencedRelation: "perfil"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_usuario_by_email: {
+        Args: { user_email: string }
+        Returns: {
+          email: string
+          id: string
+          municipio_id: string
+          nome: string
+          perfil_nome: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
