@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { supabaseServer } from '../../lib/supabase/server';
 import { featureFlags } from '../../lib/config/featureFlags';
 import type { 
   UsuarioEntity, 
@@ -54,7 +55,7 @@ export async function fetchWithPagination<T>(
 ): Promise<{ data: T[]; count: number; totalPages: number }> {
   await validateAdminRole();
   
-  let query = (supabase as any)
+  let query = (supabaseServer as any)
     .from(table)
     .select(select, { count: 'exact' });
   
@@ -93,7 +94,7 @@ export async function fetchWithPagination<T>(
 export async function createRecord<T>(table: string, data: Partial<T>): Promise<T> {
   await validateAdminRole();
   
-  const { data: result, error } = await (supabase as any)
+  const { data: result, error } = await (supabaseServer as any)
     .from(table)
     .insert(data)
     .select()
@@ -113,7 +114,7 @@ export async function updateRecord<T>(
 ): Promise<T> {
   await validateAdminRole();
   
-  const { data: result, error } = await (supabase as any)
+  const { data: result, error } = await (supabaseServer as any)
     .from(table)
     .update(data)
     .eq('id', id)
@@ -130,7 +131,7 @@ export async function updateRecord<T>(
 export async function deleteRecord(table: string, id: string): Promise<void> {
   await validateAdminRole();
   
-  const { error } = await (supabase as any)
+  const { error } = await (supabaseServer as any)
     .from(table)
     .delete()
     .eq('id', id);
@@ -143,7 +144,7 @@ export async function deleteRecord(table: string, id: string): Promise<void> {
 export async function fetchById<T>(table: string, id: string, select = '*'): Promise<T> {
   await validateAdminRole();
   
-  const { data, error } = await (supabase as any)
+  const { data, error } = await (supabaseServer as any)
     .from(table)
     .select(select)
     .eq('id', id)
