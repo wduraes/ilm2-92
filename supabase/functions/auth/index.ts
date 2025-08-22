@@ -1,6 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.56.0';
-import { hash, compare } from "https://deno.land/x/bcrypt_ts@v1.0.3/mod.ts";
+import bcrypt from "npm:bcryptjs@2.4.3";
 import * as jwt from "https://deno.land/x/djwt@v3.0.1/mod.ts";
 
 const corsHeaders = {
@@ -109,7 +109,7 @@ serve(async (req) => {
         console.log(`[DEV_MODE] Using simple hash: ${codeHash}`);
       } else {
         try {
-          codeHash = await hash(code);
+          codeHash = bcrypt.hashSync(code, 10);
           console.log(`[PROD] Generated hash successfully`);
         } catch (hashError) {
           console.error('Error hashing code:', hashError);
@@ -213,7 +213,7 @@ serve(async (req) => {
         console.log(`[DEV_MODE] Code validation result: ${isValidCode}`);
       } else {
         try {
-          isValidCode = await compare(code, otpData.code_hash);
+          isValidCode = bcrypt.compareSync(code, otpData.code_hash);
           console.log(`[PROD] Code validation result: ${isValidCode}`);
         } catch (compareError) {
           console.error('Error comparing code:', compareError);
