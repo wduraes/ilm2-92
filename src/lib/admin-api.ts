@@ -1,4 +1,5 @@
 import { supabase } from '@/integrations/supabase/client';
+import { featureFlags } from '../../lib/config/featureFlags';
 import type { 
   UsuarioEntity, 
   MunicipioEntity, 
@@ -10,6 +11,11 @@ import type {
 
 // Base admin API functions with role validation
 async function validateAdminRole() {
+  // In DEV_MODE, bypass all authentication checks
+  if (featureFlags.DEV_MODE) {
+    return;
+  }
+  
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) {
     throw new Error('Não autenticado');
