@@ -1,101 +1,83 @@
-import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useNavigate } from 'react-router-dom';
+import { Users, MapPin, School, BookOpen, ClipboardCheck, GraduationCap } from 'lucide-react';
 import ProtectedRoute from '@/components/ProtectedRoute';
-import { logout } from '@/lib/auth';
+import AdminLayout from '@/components/admin/AdminLayout';
+
+const adminTiles = [
+  {
+    title: 'Usuários',
+    description: 'Gerenciar usuários do sistema',
+    icon: Users,
+    href: '/admin/usuarios',
+    color: 'text-blue-600',
+  },
+  {
+    title: 'Municípios',
+    description: 'Gerenciar municípios cadastrados',
+    icon: MapPin,
+    href: '/admin/municipios',
+    color: 'text-green-600',
+  },
+  {
+    title: 'Escolas',
+    description: 'Gerenciar escolas e coordenadores',
+    icon: School,
+    href: '/admin/escolas',
+    color: 'text-purple-600',
+  },
+  {
+    title: 'Turmas',
+    description: 'Gerenciar turmas e professores',
+    icon: BookOpen,
+    href: '/admin/turmas',
+    color: 'text-orange-600',
+  },
+  {
+    title: 'Avaliações',
+    description: 'Gerenciar ciclos de avaliação',
+    icon: ClipboardCheck,
+    href: '/admin/avaliacoes',
+    color: 'text-red-600',
+  },
+  {
+    title: 'Alunos',
+    description: 'Gerenciar alunos e importações',
+    icon: GraduationCap,
+    href: '/admin/alunos',
+    color: 'text-indigo-600',
+  },
+];
+
 export default function AdminDashboard() {
-  const navigate = useNavigate();
-  const handleLogout = async () => {
-    await logout();
-    navigate('/login');
-  };
-  return <ProtectedRoute allowedProfiles={['administrador']}>
-      <div className="min-h-screen bg-background p-6">
-      <div className="max-w-4xl mx-auto space-y-6">
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold">Dashboard do Administrador</h1>
-            <p className="text-muted-foreground">Bem-vindo ao sistema ILM2</p>
-          </div>
-          <Button onClick={handleLogout} variant="outline">
-            Sair
-          </Button>
-        </div>
-
+  return (
+    <ProtectedRoute allowedProfiles={['administrador']}>
+      <AdminLayout title="Painel Administrativo">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Usuários</CardTitle>
-              <CardDescription>Gerenciar usuários do sistema</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button disabled className="w-full">
-                Em breve
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Municípios</CardTitle>
-              <CardDescription>Cadastro de municípios</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button disabled className="w-full">
-                Em breve
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Escolas</CardTitle>
-              <CardDescription>Cadastro de escolas</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button disabled className="w-full">
-                Em breve
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Turmas</CardTitle>
-              <CardDescription>Gerenciar turmas</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button disabled className="w-full">
-                Em breve
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Avaliações</CardTitle>
-              <CardDescription>Configurar avaliações</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button disabled className="w-full">
-                Em breve
-              </Button>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Alunos</CardTitle>
-              <CardDescription>Cadastro e importação</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Button disabled className="w-full">
-                Em breve
-              </Button>
-            </CardContent>
-          </Card>
+          {adminTiles.map((tile) => {
+            const Icon = tile.icon;
+            return (
+              <Link key={tile.href} to={tile.href}>
+                <Card className="h-full transition-all hover:shadow-lg hover:scale-105 cursor-pointer">
+                  <CardHeader className="pb-4">
+                    <div className="flex items-center space-x-3">
+                      <div className={`p-2 rounded-lg bg-muted ${tile.color}`}>
+                        <Icon className="h-6 w-6" />
+                      </div>
+                      <CardTitle className="text-lg">{tile.title}</CardTitle>
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-sm">
+                      {tile.description}
+                    </CardDescription>
+                  </CardContent>
+                </Card>
+              </Link>
+            );
+          })}
         </div>
-      </div>
-      </div>
-    </ProtectedRoute>;
+      </AdminLayout>
+    </ProtectedRoute>
+  );
 }
