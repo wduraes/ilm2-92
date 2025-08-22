@@ -3,22 +3,18 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useNavigate } from 'react-router-dom';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import { logout } from '@/lib/auth';
-
 export default function AdminDashboard() {
   const navigate = useNavigate();
-
   const handleLogout = async () => {
     await logout();
     navigate('/login');
   };
-
-  return (
-    <ProtectedRoute allowedProfiles={['administrador']}>
+  return <ProtectedRoute allowedProfiles={['administrador']}>
       <div className="min-h-screen bg-background p-6">
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold">Dashboard Administrador</h1>
+            <h1 className="text-3xl font-bold">Dashboard do Administrador</h1>
             <p className="text-muted-foreground">Bem-vindo ao sistema ILM2</p>
           </div>
           <Button onClick={handleLogout} variant="outline">
@@ -101,6 +97,5 @@ export default function AdminDashboard() {
         </div>
       </div>
       </div>
-    </ProtectedRoute>
-  );
+    </ProtectedRoute>;
 }
