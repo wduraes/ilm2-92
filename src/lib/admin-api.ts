@@ -14,7 +14,6 @@ import type {
 async function validateAdminRole() {
   // In DEV_MODE, bypass all authentication checks
   console.log('DEV_MODE:', featureFlags.DEV_MODE);
-  console.log('NODE_ENV:', process.env.NODE_ENV);
   if (featureFlags.DEV_MODE) {
     console.log('Bypassing auth check due to DEV_MODE');
     return;
