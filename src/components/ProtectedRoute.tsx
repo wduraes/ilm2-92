@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAuthState } from '@/lib/auth';
+import { featureFlags } from '../../lib/config/featureFlags';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -13,6 +14,12 @@ export default function ProtectedRoute({ children, allowedProfiles }: ProtectedR
   
   useEffect(() => {
     const checkAuth = () => {
+      // In DEV_MODE, bypass all authentication checks
+      if (featureFlags.DEV_MODE) {
+        setIsChecking(false);
+        return;
+      }
+      
       const authState = getAuthState();
       
       if (!authState.isAuthenticated) {
